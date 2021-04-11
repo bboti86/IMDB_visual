@@ -1,0 +1,102 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# IMDB ratings dataset exploratory analysis
+
+#4 based on : https://www.kaggle.com/vipluv07/imdb-visualization-with-r/notebook?select=Movie+Ratings.csv
+
+I want to understand data science deeper and this is part of my learning journey.
+
+
+```{r include=FALSE}
+#Some preliminary things: 
+library(ggplot2)
+#install.packages("treemap")
+library(treemap)
+library(tidyverse)
+backgroundColor = "#082021"
+lineColor = "#617073"
+colorPalette = c("#6b2737", "#e08e45", "#e0e2db", "#889696", "#1b2f33")
+gradientPalette = c("#6b2737", "#783c49", "#85515b", "#92656e", "#9f7a80", "#ac8f92", "#b9a4a4", "#c6b8b7", "#d3cdc9", "#e0e2db")
+```
+
+
+
+
+
+```{r echo=FALSE}
+
+#Let's import the data:
+IMDB = read.csv("Movie-Ratings.csv")
+
+```
+
+First let's see what was imported:
+
+```{r echo=FALSE}
+head(IMDB)
+summary(IMDB)
+tail(IMDB)
+str(IMDB)
+```
+
+With column names set nicely it is easier to work with the data:
+
+```{r echo=FALSE}
+colnames(IMDB) <- c("Title", "Genre", "CriticRating", "ViewerRating", "Budget", "Year")
+head(IMDB)
+```
+
+Might make sense to check these (are genre and year factors in reality?):
+
+```{r echo=FALSE}
+table(IMDB$Genre)
+table(IMDB$Year)
+```
+
+Checking the structure we can see that the Year and the Genre is actually categorical but it is threated as a number and a string by R, let's fix this:
+
+```{r echo=FALSE}
+IMDB$Year <-factor(IMDB$Year)
+IMDB$Genre <- factor(IMDB$Genre)
+str(IMDB)
+```
+
+With the data being nice and tidy it is time to analyze and visualize:
+
+We have in our hands a sample of movies. The sample size is:
+
+```{r echo=FALSE}
+length(IMDB$Title)
+```
+
+We have movies from multiple years:
+
+```{r echo=FALSE}
+#plot(IMDB$Year)
+ggplot(IMDB, aes(x=Year))+geom_bar(stat = "count", width = 0.6, fill = colorPalette[1]) + theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor))
+
+
+```
+And across many genres: 
+```{r echo=FALSE, warning=FALSE}
+pie(table(IMDB$Genre), col = gradientPalette, main = "Genre Pie Chart", border = "white")
+
+genres = as.character(unique(IMDB$Genre))
+values = as.numeric(table(IMDB$Genre))
+df = data.frame(genres, values)
+treemap(df, index = "genres", vSize = "values",border.col=backgroundColor, border.lwds=1, title="Genre distributtion", 
+        palette = gradientPalette, 
+        fontsize.labels=0.5,
+        fontcolor.labels="white",
+        #fontface.labels=1,            
+        bg.labels=c("transparent"),              
+        align.labels=c("left", "top"),                                  
+        overlap.labels=0.5,
+        inflate.labels=T )
+
+
+```
+

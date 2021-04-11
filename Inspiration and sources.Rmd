@@ -1,0 +1,29 @@
+---
+title: "Inspiration and work of others used"
+author: "Botond Barabas"
+date: "4/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# This project is step 1 in my learning journey that is described here: 
+https://towardsdatascience.com/a-checklist-to-track-your-data-science-progress-bf92e878edf2
+
+
+# This project drew inspiration from: 
+https://www.kaggle.com/vipluv07/imdb-visualization-with-r/notebook?select=Movie+Ratings.csv
+
+
+
+## used knowledge from the following places: 
+- http://www.sthda.com/english/wiki/ggplot2-themes-and-background-colors-the-3-elements 
+- https://www.maths.usyd.edu.au/u/UG/SM/STAT3022/r/current/Misc/data-visualization-2.1.pdf 
+- https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf 
+- https://ggplot2.tidyverse.org/reference/geom_bar.html
+- https://www.r-graph-gallery.com/piechart-ggplot2.html
+- https://coolors.co/6b2737-e08e45-e0e2db-889696-1b2f33-082021-617073
+- http://www.sthda.com/english/wiki/ggplot2-barplots-quick-start-guide-r-software-and-data-visualization 
+- https://www.data-to-viz.com/caveat/pie.html
