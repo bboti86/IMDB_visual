@@ -11,9 +11,9 @@ I want to understand data science deeper and this is part of my learning journey
 
 
 ```{r include=FALSE}
-#Some preliminary things: 
+#Some preliminary things:
+#install.packages(c("tidyverse", "ggplot2", "treemap"))
 library(ggplot2)
-#install.packages("treemap")
 library(treemap)
 library(tidyverse)
 backgroundColor = "#082021"
