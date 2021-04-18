@@ -76,7 +76,9 @@ We have movies from multiple years:
 
 ```{r echo=FALSE}
 #plot(IMDB$Year)
-ggplot(IMDB, aes(x=Year))+geom_bar(stat = "count", width = 0.6, fill = colorPalette[1]) + theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor))
+ggplot(IMDB, aes(x=Year)) + 
+        geom_bar(stat = "count", width = 0.6, fill = colorPalette[1]) + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor))
 
 
 ```
