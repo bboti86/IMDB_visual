@@ -1,6 +1,8 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 # IMDB ratings dataset exploratory analysis
@@ -85,7 +87,8 @@ ggplot(IMDB, aes(x=Year)) +
 ```
 And across many genres: 
 ```{r echo=FALSE, warning=FALSE}
-pie(table(IMDB$Genre), col = gradientPalette, main = "Genre Pie Chart", border = "white")
+pie(table(IMDB$Genre), col = gradientPalette, 
+    main = "Genre Pie Chart", border = "white")
 
 genres = as.character(unique(IMDB$Genre))
 values = as.numeric(table(IMDB$Genre))
@@ -123,5 +126,71 @@ rating2 <- ggplot(data = IMDB, aes(x=CriticRating, y = Budget, colour = Genre)) 
         theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor), legend.position = "none", axis.text.y = element_blank(), axis.title.y = element_blank())
 
 plot_grid(rating1, rating2)
+```
+
+```{r}
+ggplot(data = IMDB, aes(x = Budget)) + 
+        geom_histogram(binwidth = 10, aes(fill = Genre), colour = "White") + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor))
+
+```
+
+```{r}
+plot1 <- ggplot(data = IMDB, aes(x = CriticRating)) + 
+        geom_histogram(binwidth = 10, aes(fill = Genre), colour = "White") + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor), 
+              legend.position = "none", axis.text.y = element_blank(), axis.title.y = element_blank())
+plot2 <- ggplot(data = IMDB, aes(x = ViewerRating)) + 
+        geom_histogram(binwidth = 10, aes(fill = Genre), colour = "White") + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor), 
+              legend.position = "none", axis.text.y = element_blank(), axis.title.y = element_blank())
+plot_grid(plot1, plot2)
+```
+
+```{r}
+ggplot(data = IMDB, aes(x=CriticRating, y= ViewerRating, colour = Genre )) + geom_smooth(fill = NA) + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor))
+
+```
+
+```{r}
+plot1 <- ggplot(data = IMDB, aes(x=Genre, y= ViewerRating, colour = Genre )) + 
+        geom_jitter() + geom_boxplot(alpha = 0.5) + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor))
+plot2 <- plot1 <- ggplot(data = IMDB, aes(x=Genre, y= CriticRating, colour = Genre )) + 
+        geom_jitter() + geom_boxplot(alpha = 0.5) + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor))
+plot_grid(plot1, plot2, ncol = 1)
+```
+
+```{r}
+ggplot(data=IMDB,aes(x=Budget)) + geom_histogram(binwidth=10,color='white',aes(fill = Genre)) + 
+        facet_grid(Genre~.,scales = 'free') + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor))
+```
+
+```{r}
+ggplot(data = IMDB, aes(x = ViewerRating, y = CriticRating, colour = Genre)) +
+        geom_point() + facet_grid(Genre~.) + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor))
+
+```
+
+```{r message=FALSE, warning=FALSE}
+ggplot(data = IMDB, aes(x= CriticRating , y = ViewerRating , colour = Genre)) +
+        geom_point() + geom_smooth()  + facet_grid(Genre~Year) + coord_cartesian(ylim=c(0,100)) + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor))
+
+```
+
+```{r}
+ggplot(data = IMDB, aes(x = Budget)) + 
+        xlab("Budget") + 
+        ylab("Number of movies") + 
+        ggtitle("Movie and Budget Relation") + 
+        geom_histogram(binwidth =10, aes(fill = Genre), colour = "white") +
+        theme(legend.position = c(1,1), legend.justification= c(1,1), plot.title= element_text(colour = "Blue", size = 30, family = "courier" )) + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor))
+
 ```
 
