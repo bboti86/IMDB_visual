@@ -16,6 +16,7 @@ I want to understand data science deeper and this is part of my learning journey
 library(ggplot2)
 library(treemap)
 library(tidyverse)
+library(cowplot)
 backgroundColor = "#082021"
 lineColor = "#617073"
 colorPalette = c("#6b2737", "#e08e45", "#e0e2db", "#889696", "#1b2f33")
@@ -100,5 +101,27 @@ treemap(df, index = "genres", vSize = "values",border.col=backgroundColor, borde
         inflate.labels=T )
 
 
+```
+
+Would you trust the critics or the audience more? 
+
+```{r}
+ggplot(data = IMDB, aes(x=CriticRating, y = ViewerRating, colour = Genre, size = Budget)) + 
+        geom_point() + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor))
+
+```
+
+Is the money turned into high ratings? 
+
+```{r}
+rating1 <- ggplot(data = IMDB, aes(x=ViewerRating, y = Budget, colour = Genre)) + 
+        geom_point() + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor), legend.position = "none")
+rating2 <- ggplot(data = IMDB, aes(x=CriticRating, y = Budget, colour = Genre)) + 
+        geom_point() + 
+        theme(panel.background = element_rect(fill=backgroundColor, colour = lineColor), legend.position = "none", axis.text.y = element_blank(), axis.title.y = element_blank())
+
+plot_grid(rating1, rating2)
 ```
 
